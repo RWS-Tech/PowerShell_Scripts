@@ -6,7 +6,7 @@ $RegKey2 = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstal
 $AppName = 'Adobe Acrobat Reader DC'
 
 # Contains the path to the exe inside the install location.
-$ExeLocation = ""
+$ExeLocation = "Reader\AcroRd32.exe"
 
 $64BitRoot = "$Env:ProgramFiles\"
 $32BitRoot = "${Env:ProgramFiles(x86)}\"
