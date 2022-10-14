@@ -1,3 +1,8 @@
+## Check for Adobe Reader DC (File Detection Method)
+$ReaderDC = Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall","HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall" | Get-ItemProperty | Where-Object {$_.DisplayName -match 'Adobe Acrobat Reader DC' } | Select-Object -Property DisplayName, InstallLocation
+$ReaderDCExe = "$($ReaderDC.InstallLocation)Reader\AcroRd32.exe"
+$ReaderDCPath = $ReaderDCExe.Replace("C:\Program Files\","").Replace("C:\Program Files (x86)\","")
+$FileVersion = (Get-Item -Path "$ReaderDCExe" -ErrorAction SilentlyContinue).VersionInfo.FileVersion
 # Registry location containing the key
 $RegKey1 = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
 $RegKey2 = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
@@ -11,10 +16,10 @@ $ExeLocation = "Reader\AcroRd32.exe"
 $64BitRoot = "$Env:ProgramFiles\"
 $32BitRoot = "${Env:ProgramFiles(x86)}\"
 
-$App = Get-ChildItem -Path "$RegKey1","$RegKey2" | Get-ItemProperty | Where-Object {$_.DisplayName -match "$AppName" } | Select-Object -Property DisplayName, DisplayVersion, UninstallString
-$AppExe = "$($App.InstallLocation)" + "$($ExeLocation)"
+$App = Get-ChildItem -Path "$RegKey1","$RegKey2" | Get-ItemProperty | Where-Object {$_.DisplayName -match "$AppName" } | Select-Object -Property DisplayName, InstallLocation
+$AppExe = "$($App.InstallLocation)$ExeLocation"
 $AppPath = $AppExe.Replace("$64BitRoot","").Replace("$32BitRoot","")
-$FileVersion = (Get-Item -Path "$AppExe" -ErrorAction SilentlyContinue).VersionInfo.FileVersion
+$FileVersion = (Get-Item -Path $AppExe -ErrorAction SilentlyContinue).VersionInfo.FileVersion
 
 ## Create Script File with Application Registry Detection Method
 $FileAppName = "Adobe_Reader_DC"
@@ -29,6 +34,13 @@ Set-Content -Path "$FilePath" -Value "`$AppVersion = '$($FileVersion)'"
 Add-Content -Path "$FilePath" -Value "`$AppPath1 = '$($AppPath1)'"
 Add-Content -Path "$FilePath" -Value "`$AppPath2 = '$($AppPath2)'"
 Add-Content -Path "$FilePath" -Value "If([Version](Get-ItemPropertyValue -Path `$AppPath1,`$AppPath2 -Name DisplayVersion -ea SilentlyContinue) -ge `$AppVersion) {"
+Add-Content -Path "$FilePath" -Value "Write-Host `"Installed`""
+Add-Content -Path "$FilePath" -Value "}"
+Invoke-Item $FilePath
+## Create Text File with Adobe Reader DC File Detection Method
+$FilePath = "C:\DS\Adobe_Reader_DC_Detection_Method.txt"
+New-Item -Path "$FilePath" -Force
+Set-Content -Path "$FilePath" -Value "If([String](Get-Item -Path `"`$Env:ProgramFiles\$ReaderDCPath`",`"`${Env:ProgramFiles(x86)}\$ReaderDCPath`" -ErrorAction SilentlyContinue).VersionInfo.FileVersion -ge `"$FileVersion`"){"
 Add-Content -Path "$FilePath" -Value "Write-Host `"Installed`""
 Add-Content -Path "$FilePath" -Value "}"
 Invoke-Item $FilePath
