@@ -33,7 +33,7 @@ New-Item -Path "$FilePath" -Force
 Set-Content -Path "$FilePath" -Value "`$AppVersion = '$($FileVersion)'"
 Add-Content -Path "$FilePath" -Value "`$AppPath1 = '$($AppPath1)'"
 Add-Content -Path "$FilePath" -Value "`$AppPath2 = '$($AppPath2)'"
-Add-Content -Path "$FilePath" -Value "If([Version](Get-Item -Path `$AppPath1,`$AppPath2 -ea SilentlyContinue).VersionInfo.FileVersion -ge `$AppVersion) {"
+Add-Content -Path "$FilePath" -Value "If([String](Get-Item -Path `$AppPath1,`$AppPath2 -ea SilentlyContinue).VersionInfo.FileVersion -ge `$AppVersion) {"
 Add-Content -Path "$FilePath" -Value "Write-Host `"Installed`""
 Add-Content -Path "$FilePath" -Value "}"
 Invoke-Item $FilePath
