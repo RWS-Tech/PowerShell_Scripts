@@ -2,10 +2,10 @@
 $AppVersion = ""
 
 # This contains the path to the 64-Bit installation.
-$64BitPath = ""
+$64BitPath = "$Env:ProgramFiles\"
 
 # This contains the path to the 32-Bit installation.
-$32BitPath = ""
+$32BitPath = "${Env:ProgramFiles(x86)}\"
 
 # The following code checks to make sure the application is installed
 # at the assigned version.
