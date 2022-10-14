@@ -1,5 +1,5 @@
 # This contains the version to check for.
-$AppVersion = ""
+$AppVersion = "xx.x.xxxxx.x"
 
 # This contains the path to the 64-Bit installation.
 $64BitPath = "$Env:ProgramFiles\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe"

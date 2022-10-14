@@ -1,5 +1,5 @@
 # This contains the version to check for.
-$AppVersion = ""
+$AppVersion = "xx.xx"
 
 # This contains the path to the 64-Bit installation.
 $64BitPath = "$Env:ProgramFiles\7-Zip\7zFM.exe"
