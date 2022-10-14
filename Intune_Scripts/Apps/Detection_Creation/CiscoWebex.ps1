@@ -10,7 +10,10 @@ $Webex.DisplayVersion
 $GUID = $Webex.UninstallString -replace $Uninstall1, '' -replace $Uninstall2, ''
 
 ## Create Text File with Cisco Webex Registry Detection Method
-$FilePath = "C:\Temp\Cisco_Webex_Detection_Method.ps1"
+$FileAppName = "App_Name"
+$FileName = $FileAppName + "_Detection_Method.ps1"
+$FileRoot = "C:\Temp\"
+$FilePath = $FileRoot + $FileName
 $RegGUID = "\$($GUID)"
 $RegPath1 = $RegKey1 + $RegGUID
 $RegPath2 = $RegKey2 + $RegGUID
