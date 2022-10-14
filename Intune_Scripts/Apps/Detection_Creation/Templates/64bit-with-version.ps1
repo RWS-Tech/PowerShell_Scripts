@@ -19,8 +19,8 @@ $FilePath = $SRoot + $FileName
 
 
 New-Item -Path "$FilePath" -Force
-Set-Content -Path "$FilePath" -Value "`$AppVersion = $FileVersion"
-Add-Content -Path "$FilePath" -Value "`$64BitPath = $64BitPath + $AppPath"
+Set-Content -Path "$FilePath" -Value "`$AppVersion = '$FileVersion'"
+Add-Content -Path "$FilePath" -Value "`$64BitPath = '$64BitPath'"
 Add-Content -Path "$FilePath" -Value "If([String](Get-Item -Path `$64BitPath -ErrorAction SilentlyContinue).VersionInfo.FileVersion -ge `$AppVersion){"
 Add-Content -Path "$FilePath" -Value "Write-Host `"Installed`""
 Add-Content -Path "$FilePath" -Value "}"
