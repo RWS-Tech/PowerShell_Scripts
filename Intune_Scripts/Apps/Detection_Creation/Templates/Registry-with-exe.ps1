@@ -11,7 +11,7 @@ $ExeLocation = ""
 $64BitRoot = "$Env:ProgramFiles\"
 $32BitRoot = "${Env:ProgramFiles(x86)}\"
 
-$App = Get-ChildItem -Path "$RegKey1","$RegKey2" | Get-ItemProperty | Where-Object {$_.DisplayName -match "$AppName" } | Select-Object -Property DisplayName, DisplayVersion, UninstallString
+$App = Get-ChildItem -Path "$RegKey1","$RegKey2" | Get-ItemProperty | Where-Object {$_.DisplayName -match "$AppName" } | Select-Object -Property DisplayName, InstallLocation
 $AppExe = "$($App.InstallLocation)" + "$($ExeLocation)"
 $AppPath = $AppExe.Replace("$64BitRoot","").Replace("$32BitRoot","")
 $FileVersion = (Get-Item -Path "$AppExe" -ErrorAction SilentlyContinue).VersionInfo.FileVersion
