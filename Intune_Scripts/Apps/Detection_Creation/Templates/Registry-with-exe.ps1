@@ -12,7 +12,7 @@ $64BitRoot = "$Env:ProgramFiles\"
 $32BitRoot = "${Env:ProgramFiles(x86)}\"
 
 $App = Get-ChildItem -Path "$RegKey1","$RegKey2" | Get-ItemProperty | Where-Object {$_.DisplayName -match "$AppName" } | Select-Object -Property DisplayName, InstallLocation
-$AppExe = "$($App.InstallLocation)" + "$($ExeLocation)"
+$AppExe = "$($App.InstallLocation)$ExeLocation"
 $AppPath = $AppExe.Replace("$64BitRoot","").Replace("$32BitRoot","")
 $FileVersion = (Get-Item -Path "$AppExe" -ErrorAction SilentlyContinue).VersionInfo.FileVersion
 
@@ -28,7 +28,7 @@ New-Item -Path "$FilePath" -Force
 Set-Content -Path "$FilePath" -Value "`$AppVersion = '$($FileVersion)'"
 Add-Content -Path "$FilePath" -Value "`$AppPath1 = '$($AppPath1)'"
 Add-Content -Path "$FilePath" -Value "`$AppPath2 = '$($AppPath2)'"
-Add-Content -Path "$FilePath" -Value "If([Version](Get-ItemPropertyValue -Path `$AppPath1,`$AppPath2 -Name DisplayVersion -ea SilentlyContinue) -ge `$AppVersion) {"
+Add-Content -Path "$FilePath" -Value "If([Version](Get-Item -Path `$AppPath1,`$AppPath2 -ea SilentlyContinue).VersionInfo.FileVersion -ge `$AppVersion) {"
 Add-Content -Path "$FilePath" -Value "Write-Host `"Installed`""
 Add-Content -Path "$FilePath" -Value "}"
 Invoke-Item $FilePath
