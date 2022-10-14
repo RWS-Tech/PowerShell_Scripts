@@ -33,14 +33,7 @@ New-Item -Path "$FilePath" -Force
 Set-Content -Path "$FilePath" -Value "`$AppVersion = '$($FileVersion)'"
 Add-Content -Path "$FilePath" -Value "`$AppPath1 = '$($AppPath1)'"
 Add-Content -Path "$FilePath" -Value "`$AppPath2 = '$($AppPath2)'"
-Add-Content -Path "$FilePath" -Value "If([Version](Get-ItemPropertyValue -Path `$AppPath1,`$AppPath2 -Name DisplayVersion -ea SilentlyContinue) -ge `$AppVersion) {"
-Add-Content -Path "$FilePath" -Value "Write-Host `"Installed`""
-Add-Content -Path "$FilePath" -Value "}"
-Invoke-Item $FilePath
-## Create Text File with Adobe Reader DC File Detection Method
-$FilePath = "C:\DS\Adobe_Reader_DC_Detection_Method.txt"
-New-Item -Path "$FilePath" -Force
-Set-Content -Path "$FilePath" -Value "If([String](Get-Item -Path `"`$Env:ProgramFiles\$ReaderDCPath`",`"`${Env:ProgramFiles(x86)}\$ReaderDCPath`" -ErrorAction SilentlyContinue).VersionInfo.FileVersion -ge `"$FileVersion`"){"
+Add-Content -Path "$FilePath" -Value "If([Version](Get-ItemPropertyValue -Path `$AppPath1,`$AppPath2 -ea SilentlyContinue).VersionInfo.FileVersion -ge `$AppVersion) {"
 Add-Content -Path "$FilePath" -Value "Write-Host `"Installed`""
 Add-Content -Path "$FilePath" -Value "}"
 Invoke-Item $FilePath
