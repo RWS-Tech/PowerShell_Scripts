@@ -12,7 +12,7 @@ $FileVersion = (Get-Item -Path "$($AppExe.FullName)" -ErrorAction SilentlyContin
 
 # Create the script with the Application Detection Method
 # Contains the name of the Application
-$AppName = "Zoom"
+$AppName = "Zoom_Desktop_Client"
 $FileName = $AppName + "_Detection_Method.ps1"
 
 #Contains the location where the script will be saved
