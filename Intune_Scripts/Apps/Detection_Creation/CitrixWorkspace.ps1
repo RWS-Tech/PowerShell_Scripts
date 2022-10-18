@@ -1,31 +1,32 @@
-# 64-Bit File Path, add the rest of the file path
-$64BitPath = "$Env:ProgramFiles\Citrix\Citrix WorkSpace*\TrolleyExpress.exe"
+#Registry location containing the key
+$RegKey1 = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"
+$RegKey2 = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\"
 
-# 32-Bit File, add the rest of the file path
-$32BitPath = "${Env:ProgramFiles(x86)}\Citrix\Citrix WorkSpace*\TrolleyExpress.exe"
+#Application Display Name
+$AppName = 'CITRIXONLINEPLUGINPACKWEB'
 
-# Check for Application (File Detection Method)
-$AppExe = (Get-ChildItem -Path $64BitPath,$32BitPath -ErrorAction SilentlyContinue)
-$AppExe.FullName
-$AppPath = $($AppExe.FullName).Replace("$Env:ProgramFiles\","").Replace("${Env:ProgramFiles(x86)}\","")
-$FileVersion = (Get-Item -Path "$($AppExe.FullName)" -ErrorAction SilentlyContinue).VersionInfo.FileVersion
+#Uninstalll Commands
+$Uninstall1 = 'MsiExec.exe /I'
+$Uninstall2 = 'MsiExec.exe /X'
 
-# Create the script with the Application Detection Method
-# Contains the name of the Application
-$AppName = "Citrix_Workspace"
-$FileName = $AppName + "_Detection_Method.ps1"
+$App = Get-ChildItem -Path $RegKey1,$RegKey2 | Get-ItemProperty | Where-Object {$_.DisplayName -match $AppName } | Select-Object -Property DisplayName, DisplayVersion, UninstallString
+$App.DisplayVersion
+$GUID = $App.UninstallString -replace $Uninstall1, '' -replace $Uninstall2, ''
 
-#Contains the location where the script will be saved
-$SRoot = "C:\Temp\" 
-
-$FilePath = $SRoot + $FileName
-
+## Create Script File with Application Registry Detection Method
+$FileAppName = "Citrix_Workspace"
+$FileName = $FileAppName + "_Detection_Method.ps1"
+$FileRoot = "C:\Temp\"
+$FilePath = $FileRoot + $FileName
+$RegGUID = "\$($GUID)"
+$RegPath1 = $RegKey1 + $RegGUID
+$RegPath2 = $RegKey2 + $RegGUID
 
 New-Item -Path "$FilePath" -Force
-Set-Content -Path "$FilePath" -Value "`$AppVersion = '$FileVersion'"
-Add-Content -Path "$FilePath" -Value "`$64BitPath = '$64BitPath'"
-Add-Content -Path "$FilePath" -Value "`$32BitPath = '$32BitPath'"
-Add-Content -Path "$FilePath" -Value "If([String](Get-Item -Path `$64BitPath,`$32BitPath -ErrorAction SilentlyContinue).VersionInfo.FileVersion -ge `$AppVersion){"
+Set-Content -Path "$FilePath" -Value "`$AppVersion = '$($App.DisplayVersion)'"
+Add-Content -Path "$FilePath" -Value "`$RegPath1 = '$($RegPath1)'"
+Add-Content -Path "$FilePath" -Value "`$RegPath2 = '$($RegPath2)'"
+Add-Content -Path "$FilePath" -Value "If([Version](Get-ItemPropertyValue -Path `$RegPath1,`$RegPath2 -Name DisplayVersion -ea SilentlyContinue) -ge `$AppVersion) {"
 Add-Content -Path "$FilePath" -Value "Write-Host `"Installed`""
 Add-Content -Path "$FilePath" -Value "}"
 Invoke-Item $FilePath
