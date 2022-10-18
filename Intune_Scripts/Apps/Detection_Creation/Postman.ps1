@@ -12,7 +12,7 @@ $FileRoot = "C:\Temp\"
 $FilePath = $FileRoot + $FileName
 
 New-Item -Path "$FilePath" -Force
-Set-Content -Path "$FilePath" -Value "`$AppVersion = $AppKey.DisplayVersion"
+Set-Content -Path "$FilePath" -Value "`$AppVersion = $($AppKey.DisplayVersion)"
 Add-Content -Path "$FilePath" -Value "Function Get-LoggedOnUserSID {"
 Add-Content -Path "$FilePath" -Value "## ref https://www.reddit.com/r/PowerShell/comments/7coamf/query_no_user_exists_for/"
 Add-Content -Path "$FilePath" -Value "## ref https://smsagent.blog/2022/03/03/user-context-detection-rules-for-intune-win32-apps/"
