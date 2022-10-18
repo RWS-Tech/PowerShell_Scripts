@@ -1,6 +1,6 @@
 $AppVersion = 'x.xx'
 $32BitPath = 'C:\Program Files (x86)\Notepad++\notepad++.exe'
-If([String](Get-Item -Path $32BitPath -ErrorAction SilentlyContinue).VersionInfo.FileVersion -ge $AppVersion){
+If([String](Get-Item -Path $32BitPath -ErrorAction SilentlyContinue).VersionInfo.FileVersion -lt $AppVersion){
 Write-Host "Installed"
 Exit 0
 }

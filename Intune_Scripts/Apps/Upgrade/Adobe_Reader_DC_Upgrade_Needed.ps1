@@ -9,6 +9,6 @@ $32BitPath = "${Env:ProgramFiles(x86)}\Adobe\Acrobat Reader DC\Reader\AcroRd32.e
 
 # The following code checks to make sure the application is installed
 # at the assigned version.
-If([String](Get-Item -Path $64BitPath,$32BitPath -ErrorAction SilentlyContinue).VersionInfo.FileVersion -ge $AppVersion){
+If([String](Get-Item -Path $64BitPath,$32BitPath -ErrorAction SilentlyContinue).VersionInfo.FileVersion -lt $AppVersion){
  Write-Host "Installed"
 }
