@@ -3,7 +3,7 @@ $RegKey1 = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
 $RegKey2 = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
 
 #Application Display Name
-$AppName = 'CITRIXONLINEPLUGINPACKWEB'
+$AppName = 'Citrix Workspace(DV)'
 
 #Uninstalll Commands
 $Uninstall1 = 'MsiExec.exe /I'
