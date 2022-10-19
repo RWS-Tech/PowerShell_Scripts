@@ -1,4 +1,4 @@
-$AppVersion = "1.5.00.28361"
+$AppVersion = "x.x.xx.xxxxx"
 Function Get-LoggedOnUserSID {
 ## ref https://www.reddit.com/r/PowerShell/comments/7coamf/query_no_user_exists_for/
 ## ref https://smsagent.blog/2022/03/03/user-context-detection-rules-for-intune-win32-apps/
