@@ -1,9 +1,8 @@
-$AppVersion = 'x.xxx.xxx.x'
 $64BitPath = 'C:\Program Files\Microsoft Power BI Desktop\bin\PBIDesktop.exe'
 $32BitPath = 'C:\Program Files (x86)\Microsoft Power BI Desktop\bin\PBIDesktop.exe'
-If([String](Get-Item -Path $64BitPath,$32BitPath -ErrorAction SilentlyContinue).VersionInfo.FileVersion -ge $AppVersion){
-Write-Host "Up-to-date"
+If([String](Get-Item -Path $64BitPath,$32BitPath -ErrorAction SilentlyContinue).VersionInfo.FileVersion){
+Write-Host "Update"
 }
 Else{
-Write-Host "Update"
+Write-Host "Not Installed"
 }

@@ -1,4 +1,3 @@
-$AppVersion = "x.x.xx.xxxxx"
 Function Get-LoggedOnUserSID {
 ## ref https://www.reddit.com/r/PowerShell/comments/7coamf/query_no_user_exists_for/
 ## ref https://smsagent.blog/2022/03/03/user-context-detection-rules-for-intune-win32-apps/
@@ -44,17 +43,15 @@ else
 {
 $r = Get-ItemProperty "HKU:\$LoggedOnUserSID\Software\Microsoft\Windows\CurrentVersion\Uninstall\Teams" -Name 'DisplayVersion' -ErrorAction SilentlyContinue |
 Select -ExpandProperty 'DisplayVersion'
-If ($r -ge $AppVersion)
+If ($r)
 {
 ## Installed
-"Up-to-date"
-Exit 0
+"Update"
 }
 else
 {
 ## Correct App Version NOT Installed
-"Update"
-Exit 1
+"Not Installed"
 }
 }
 }
