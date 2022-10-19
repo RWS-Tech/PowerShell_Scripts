@@ -9,6 +9,9 @@ $32BitPath = "${Env:ProgramFiles}(x86)\7-Zip\7zFM.exe"
 
 # The following code checks to make sure the application is installed
 # at the assigned version.
-If([String](Get-Item -Path $64BitPath,$32BitPath -ErrorAction SilentlyContinue).VersionInfo.FileVersion -lt $AppVersion){
- Write-Host "Installed"
+If([String](Get-Item -Path $64BitPath,$32BitPath -ErrorAction SilentlyContinue).VersionInfo.FileVersion -ge $AppVersion){
+ Write-Host "Up-to-date"
+}
+Else {
+Write-Host "Update"
 }
