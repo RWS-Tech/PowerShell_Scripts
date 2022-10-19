@@ -9,7 +9,7 @@ $AppName = ''
 $Uninstall1 = 'MsiExec.exe /I'
 $Uninstall2 = 'MsiExec.exe /X'
 
-$App = Get-ChildItem -Path $RegKey1,$RegKey2 | Get-ItemProperty | Where-Object {$_.DisplayName -match $AppName } | Select-Object -Property DisplayName, DisplayVersion, UninstallString
+$App = Get-ChildItem -Path $RegKey1,$RegKey2 | Get-ItemProperty | Where-Object {$_.DisplayName -eq $AppName } | Select-Object -Property DisplayName, DisplayVersion, UninstallString
 $App.DisplayVersion
 $GUID = $App.UninstallString -replace $Uninstall1, '' -replace $Uninstall2, ''
 
