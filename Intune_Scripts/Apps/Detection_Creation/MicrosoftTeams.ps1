@@ -1,5 +1,5 @@
 # Check for Postman (Registry Detection Method)
-$AppName = "Microsoft_Teams"
+$AppName = "Microsoft Teams"
 $RegKey = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
 $AppKey = Get-ChildItem -Path "$RegKey" | Get-ItemProperty | Where-Object {$_.DisplayName -match "$AppName"} | Select-Object -Property DisplayName, DisplayVersion, PSChildName
 $AppKey.DisplayVersion
