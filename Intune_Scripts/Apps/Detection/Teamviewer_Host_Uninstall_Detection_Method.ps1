@@ -5,6 +5,6 @@ $RegKey2 = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstal
 #Application Display Name
 $AppName = 'TeamViewer Host'
 
-If(Get-ChildItem -Path $RegKey1,$RegKey2 | Get-ItemProperty | Where-Object {$_.DisplayName -ne $AppName }) {
+If( -not (Get-ChildItem -Path $RegKey1,$RegKey2 | Get-ItemProperty | Where-Object {$_.DisplayName -eq $AppName })) {
 Write-Host "Installed"
 }
