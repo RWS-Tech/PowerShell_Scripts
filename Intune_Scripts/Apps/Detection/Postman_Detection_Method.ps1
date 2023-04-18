@@ -1,4 +1,4 @@
-$AppVersion = "1.5.00.33362"
+$AppVersion = "10.11.1"
 Function Get-LoggedOnUserSID {
 ## ref https://www.reddit.com/r/PowerShell/comments/7coamf/query_no_user_exists_for/
 ## ref https://smsagent.blog/2022/03/03/user-context-detection-rules-for-intune-win32-apps/
@@ -33,7 +33,7 @@ If ($null -eq (Get-PSDrive -Name HKU -ErrorAction SilentlyContinue))
 {
 $null = New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
 }
-$i = Get-Item "HKU:\$LoggedOnUserSID\Software\Microsoft\Windows\CurrentVersion\Uninstall\Teams" -ErrorAction SilentlyContinue
+$i = Get-Item "HKU:\$LoggedOnUserSID\Software\Microsoft\Windows\CurrentVersion\Uninstall\Postman" -ErrorAction SilentlyContinue
 if ($null -eq $i)
 {
 ## Key Does NOT Exist
@@ -42,7 +42,7 @@ Exit 1
 }
 else
 {
-$r = Get-ItemProperty "HKU:\$LoggedOnUserSID\Software\Microsoft\Windows\CurrentVersion\Uninstall\Teams" -Name 'DisplayVersion' -ErrorAction SilentlyContinue |
+$r = Get-ItemProperty "HKU:\$LoggedOnUserSID\Software\Microsoft\Windows\CurrentVersion\Uninstall\Postman" -Name 'DisplayVersion' -ErrorAction SilentlyContinue |
 Select -ExpandProperty 'DisplayVersion'
 If ($r -ge $AppVersion)
 {
