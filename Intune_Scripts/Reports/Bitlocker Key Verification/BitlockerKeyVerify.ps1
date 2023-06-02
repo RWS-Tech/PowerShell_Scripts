@@ -1,12 +1,16 @@
 Function CheckBitlockerKey {
-    cls
-    If ((Get-BitLockerVolume -MountPoint C -ErrorAction SilentlyContinue).KeyProtector) {
-        $KeyID = ((Get-BitLockerVolume -MountPoint C).KeyProtector | Where-Object -Property KeyProtectorType -EQ "RecoveryPassword").KeyProtectorId
-        $RecPass = ((Get-BitLockerVolume -MountPoint C).KeyProtector | Where-Object -Property KeyProtectorType -EQ "RecoveryPassword").RecoveryPassword
+    $BlProp = "RecoveryPassword"
+    $BlMsg1 = "Key ID: "
+    $BlMsg2 = "    Recovery Password: "
+    $NoBl = "No Bitlocker Encryption Detected"
     
-        Write-Output "Key ID: $($KeyID)    Recovery Password: $($RecPass)"
+    If ((Get-BitLockerVolume -MountPoint C -ErrorAction SilentlyContinue).KeyProtector) {
+        $KeyID = ((Get-BitLockerVolume -MountPoint C).KeyProtector | Where-Object -Property KeyProtectorType -EQ $BlProp).KeyProtectorId
+        $RecPass = ((Get-BitLockerVolume -MountPoint C).KeyProtector | Where-Object -Property KeyProtectorType -EQ $BlProp).RecoveryPassword
+    
+        Write-Output "$(BlMsg1)$($KeyID)$($BlMsg2)$($RecPass)"
     } Else {
-        Write-Output "No Bitlocker Encryption Detected"
+        Write-Output $NoBl
     }    
     Exit 0
 }
