@@ -1,5 +1,4 @@
 Function BatteryCheckVerify {
-    cls
     $BatChkFile = "C:\Temp\batchk.txt"
     $BatMsgFile = "C:\Temp\batmsg.txt"
     $BatWrnLvlFile = "C:\Temp\batwrn.txt"
