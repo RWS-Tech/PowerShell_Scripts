@@ -14,24 +14,28 @@ function DiskSpaceChk {
     $LowDskSpc = "Low Disk Space"
     $OkDskSpc = "Disk Space is nearing low level"
     $GoodDskSpc = "Disk Space is good"
+    $DskMsg1 = "% Free: "
+    $DskMsg2 = "%,  GB Free: "
+    $DskMsg3 = " GB,  Total GB: "
+    $DskMsg4 = " GB"
 
     If( -not (Test-Path -Path $DskChkFile -PathType Leaf)) {
         If($Free_Space_Percent -le $Percent_Alert) {
-            Write-Output "% Free: $($Free_Space_Percent)%,  GB Free: $($GB_Free) GB,  Total GB: $($GB_Total) GB"
+            Write-Output "$($DskMsg1)$($Free_Space_Percent)$($DskMsg2)$($GB_Free)$($DskMsg3)$($GB_Total)$($DskMsg4)"
             $DiskMsg = $LowDskSpc
             $DiskWrn = "1"
             $DiskMsg | Out-File $DskMsgFile
             $DiskWrn | Out-File $DskWrnFile
             Exit 1
         } Elseif (($Free_Space_Percent -gt $Percent_Alert) -and ($Free_Space_Percent -le $Percent_Warn)) {
-            Write-Output "% Free: $($Free_Space_Percent)%,  GB Free: $($GB_Free) GB,  Total GB: $($GB_Total) GB"
+            Write-Output "$($DskMsg1)$($Free_Space_Percent)$($DskMsg2)$($GB_Free)$($DskMsg3)$($GB_Total)$($DskMsg4)"
             $DiskMsg = $OkDskSpc
             $DiskWrn = "2"
             $DiskMsg | Out-File $DskMsgFile
             $DiskWrn | Out-File $DskWrnFile
             Exit 1
         } Elseif ($Free_Space_Percent -gt $Percent_Warn) {
-            Write-Output "% Free: $($Free_Space_Percent)%,  GB Free: $($GB_Free) GB,  Total GB: $($GB_Total) GB"
+            Write-Output "$($DskMsg1)$($Free_Space_Percent)$($DskMsg2)$($GB_Free)$($DskMsg3)$($GB_Total)$($DskMsg4)"
             $DiskMsg = $GoodDskSpc
             $DiskWrn = "2"
             $DiskMsg | Out-File $DskMsgFile
