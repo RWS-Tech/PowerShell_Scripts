@@ -55,7 +55,7 @@ Function GetSysInfo {
     $HDTotalOut = "Total Hard Drive Space: $($HDTotal) GB `n"
     $HDFreeOut = "Free Hard Drive Space: $($HDFree) GB `n"
     $NetNameOut = "Network Adapter Used: $($NetName) `n"
-    $NetTypeOut = "Type of Network Adapter Used: $($NetType) `n`n`n`nVideo Adapters:`n`n"
+    $NetTypeOut = "Type of Network Adapter Used: $($NetType) `n`n`nVideo Adapters:`n`n"
 
     $SysInfoOut = "$($PCNameOut)$($OSNameOut)$($OSVerOut)$($CPUNameOut)$($CPUPCoreOut)$($CPUVCoreOut)$($CPUBitOut)$($RAMTotalOut)$($HDTotalOut)$($HDFreeOut)$($NetNameOut)$($NetTypeOut)$($VOut)"
 
