@@ -60,5 +60,6 @@ Function GetSysInfo {
     $SysInfoOut = "$($PCNameOut)$($OSNameOut)$($OSVerOut)$($CPUNameOut)$($CPUPCoreOut)$($CPUVCoreOut)$($CPUBitOut)$($RAMTotalOut)$($HDTotalOut)$($HDFreeOut)$($NetNameOut)$($NetTypeOut)$($VOut)"
 
     Write-Output $SysInfoOut
+    Exit 0
 }
 GetSysInfo
